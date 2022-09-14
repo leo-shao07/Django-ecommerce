@@ -1,0 +1,34 @@
+<html>
+    <body>
+        <h1>
+            Input Your name and quantity to buy
+        </h1>
+        
+        <table>
+            <tr>
+                <th>Good ID</th>
+                <th>Name</th>
+            </tr>
+            {% for good in goods %}
+            <tr>
+                <td>{{good.id}}</td>
+                <td>{{good.name}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form action = "" method = "POST">
+            {% csrf_token %}
+            <label for="your_name">Your name: </label>
+            <input id="your_name" type="text" name="your_name">
+            <br>
+            <label for="good_id">good id: </label>
+            <input id="good_id" type="number" name="good_id">
+            <br>
+            <label for="quantity">quantity: </label>
+            <input id="quantity" type="number" name="quantity">
+            <br>
+            <input type="submit" value="BUY">
+        </form>
+        
+    </body>
+</html>

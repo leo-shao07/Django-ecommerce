@@ -1,0 +1,25 @@
+<html>
+    <body>
+        <h1>
+            Shop History
+        </h1>
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Good</th>
+                <th>Customer</th>
+                <th>Quantity</th>
+                <th>Create Time</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                <td>{{order.good}}</td>
+                <td>{{order.purchase_name}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.create_time}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
