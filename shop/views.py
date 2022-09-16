@@ -15,6 +15,7 @@ def list_good(request):
         order.purchase_name = data.get("your_name")
         order.quantity = data.get("quantity")
         order.good = Good(pk=data.get("good_id"))
+
         order.save()
         return redirect(home)
     else:

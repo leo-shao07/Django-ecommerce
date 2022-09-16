@@ -59,6 +59,9 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
 ROOT_URLCONF = 'ecommerce.urls'
 
@@ -85,12 +88,20 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'ecommerce',
+    #     'HOST': '127.0.0.1',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root'
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ecommerce',
-        'HOST': '127.0.0.1',
         'USER': 'root',
-        'PASSWORD': 'root'
+        'PASSWORD': 'root',
+        'PORT': '3306',
+        'HOST': 'mysql',
     }
 }
 
@@ -119,11 +130,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
