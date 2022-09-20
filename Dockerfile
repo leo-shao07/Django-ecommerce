@@ -10,8 +10,8 @@ RUN apt-get update -y \
     && pip3 install -r requirements.txt
 COPY . .
 EXPOSE 8000
-COPY ./wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# COPY ./wait-for-it.sh /wait-for-it.sh
+RUN chmod +x wait-for-it.sh
+# COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x entrypoint.sh
 # ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
