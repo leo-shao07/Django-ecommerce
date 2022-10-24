@@ -13,13 +13,13 @@
         
         <table>
             <tr>
-                <th>Good ID</th>
+                <!-- <th>Good ID</th> -->
                 <th>Name</th>
             </tr>
             {% for good in goods %}
             <tr>
-                <td>{{good.id}}</td>
-                <td>{{good.name}}</td>
+                <!-- <td>{{good.id}}</td> -->
+                <td>{{good.goods_name}}</td>
             </tr>
             {% endfor %}
         </table>
@@ -28,8 +28,8 @@
             <label for="your_name">Your name: </label>
             <input id="your_name" type="text" name="your_name">
             <br>
-            <label for="good_id">good id: </label>
-            <input id="good_id" type="number" name="good_id">
+            <label for="good_id">goods name: </label>
+            <input id="goods_name" type="text" name="goods_name">
             <br>
             <label for="quantity">quantity: </label>
             <input id="quantity" type="number" name="quantity">

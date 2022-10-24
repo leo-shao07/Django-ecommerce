@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'playground',
     'debug_toolbar',
-    'shop'
+    'shop',
+    # 'mongoengine',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +105,16 @@ DATABASES = {
         'HOST': 'mysql',
     }
 }
-
+# MONGODB_DATABASES = {
+#     "default": {
+#         "name": "sandbox",
+#         "host": "mongodb+srv://sandbox.cos8g7p.mongodb.net",
+#         "password": "m001-mongodb-basics",
+#         "username": "m001-student",
+#     },
+# }
+# from mongoengine import connect
+# connect("sandbox", host="mongodb+srv://m001-student:m001-mongodb-basics@sandbox.cos8g7p.mongodb.net")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

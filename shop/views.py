@@ -1,63 +1,50 @@
+from datetime import datetime
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
-from shop.models import Good, Order
+# from shop.models import Good, Order
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import GoodSerializer,OrderSerializer
 # Create your views here.
+from pymongo import MongoClient
+
+client = MongoClient('mongodb+srv://m001-student:m001-mongodb-basics@sandbox.cos8g7p.mongodb.net/sandbox')
 
 def list_good(request):
     if request.method == 'POST':
         data = request.POST.dict()
-        order = Order()
-        order.purchase_name = data.get("your_name")
-        order.quantity = data.get("quantity")
-        order.good = Good(pk=data.get("good_id"))
+        mycol = client['django-data']['GoodsAndHistory']
+        inputdata = { "name": data.get("your_name"), "quantity": int(data.get("quantity")),"time": datetime.now()}
+        mycol.update_one({'goods_name': data.get("goods_name")}, {'$push': {"history":inputdata}})
 
-        order.save()
         return redirect(home)
     else:
-        query_set = Good.objects.all()
-        print(list(query_set))
-        return render(request,'buy.html',{'goods':list(query_set)})
+        filter={}
+        project={
+            'goods_name': 1,
+            '_id':0
+        }
 
-# def buy_good(request):
-#     data = request.POST.dict()
-#     order = Order()
-#     order.purchase_name = data.get("your_name")
-#     order.quantity = data.get("quantity")
-#     order.good = Good(pk=data.get("good_id"))
-#     order.save()
-#     return redirect(home)
+        result = client['django-data']['GoodsAndHistory'].find(filter=filter,projection=project)
+        l = []
+        for r in result:
+            map = {}
+            map["goods_name"] = r["goods_name"]
+            l.append(map)
+        return render(request,'buy.html',{'goods':l})
 
 def list_history(request):
-    queryset = Order.objects.select_related('good').all()
-    return render(request,'history.html',{'orders':list(queryset)})
+    result = client['django-data']['GoodsAndHistory'].aggregate([
+        {
+            '$unwind': {
+                'path': '$history'
+            }
+        }
+    ])
+    return render(request,'history.html',{'orders':list(result)})
 
 def home(request):
     return render(request,'home.html')
-
-# @api_view()
-# def list_good(request):
-#     query_set = Good.objects.all()
-#     serializer = GoodSerializer(query_set,many=True)
-#     # print(list(query_set))
-#     return Response(serializer.data)
-
-
-# @api_view(['GET','POST'])
-# def list_history(request):
-#     if request.method == 'GET':
-#         queryset = Order.objects.select_related('good').all()
-#         ser = OrderSerializer(queryset,many=True)
-#         return Response(ser.data)
-#     elif request.method == 'POST':
-#         serializer = OrderSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.validated_data
-#             return Response('ok')
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

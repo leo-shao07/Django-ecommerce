@@ -12,7 +12,6 @@
         </h1>
         <table>
             <tr>
-                <th>Order ID</th>
                 <th>Good</th>
                 <th>Customer</th>
                 <th>Quantity</th>
@@ -20,11 +19,10 @@
             </tr>
             {% for order in orders %}
             <tr>
-                <td>{{order.id}}</td>
-                <td>{{order.good}}</td>
-                <td>{{order.purchase_name}}</td>
-                <td>{{order.quantity}}</td>
-                <td>{{order.create_time}}</td>
+                <td>{{order.goods_name}}</td>
+                <td>{{order.history.name}}</td>
+                <td>{{order.history.quantity}}</td>
+                <td>{{order.history.time}}</td>
             </tr>
             {% endfor %}
         </table>
